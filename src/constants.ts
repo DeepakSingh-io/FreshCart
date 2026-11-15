@@ -1,0 +1,123 @@
+import { Product, Category } from './types';
+
+export const CATEGORIES: Category[] = [
+  { id: 'all', name: 'All', icon: 'LayoutGrid' },
+  { id: 'fruits', name: 'Fruits', icon: 'Apple' },
+  { id: 'vegetables', name: 'Vegetables', icon: 'Leaf' },
+  { id: 'dairy', name: 'Dairy & Eggs', icon: 'Milk' },
+  { id: 'bakery', name: 'Bakery', icon: 'Croissant' },
+  { id: 'meat', name: 'Meat & Seafood', icon: 'Fish' },
+  { id: 'pantry', name: 'Pantry', icon: 'Package' },
+  { id: 'beverages', name: 'Beverages', icon: 'Coffee' },
+];
+
+export const PRODUCTS: Product[] = [
+  {
+    id: '1',
+    name: 'Organic Bananas',
+    price: 0.99,
+    category: 'fruits',
+    unit: 'lb',
+    image: 'https://images.unsplash.com/photo-1603833665858-e81b1c7e4460?auto=format&fit=crop&q=80&w=400',
+    description: 'Fresh organic bananas, perfectly ripened.'
+  },
+  {
+    id: '2',
+    name: 'Red Strawberries',
+    price: 4.99,
+    category: 'fruits',
+    unit: 'pack',
+    image: 'https://images.unsplash.com/photo-1464965911861-746a04b4bca6?auto=format&fit=crop&q=80&w=400',
+    description: 'Sweet and juicy strawberries from local farms.'
+  },
+  {
+    id: '3',
+    name: 'Fresh Spinach',
+    price: 2.49,
+    category: 'vegetables',
+    unit: 'bag',
+    image: 'https://images.unsplash.com/photo-1576045057995-568f588f82fb?auto=format&fit=crop&q=80&w=400',
+    description: 'Crispy baby spinach leaves, pre-washed.'
+  },
+  {
+    id: '4',
+    name: 'Whole Milk',
+    price: 3.89,
+    category: 'dairy',
+    unit: 'gal',
+    image: 'https://images.unsplash.com/photo-1563636619-e910f01859ec?auto=format&fit=crop&q=80&w=400',
+    description: 'Vitamin D fortified whole milk.'
+  },
+  {
+    id: '5',
+    name: 'Sourdough Bread',
+    price: 5.50,
+    category: 'bakery',
+    unit: 'loaf',
+    image: 'https://images.unsplash.com/photo-1585478259715-876acc5be8eb?auto=format&fit=crop&q=80&w=400',
+    description: 'Artisan sourdough bread baked fresh daily.'
+  },
+  {
+    id: '6',
+    name: 'Avocados',
+    price: 1.50,
+    category: 'fruits',
+    unit: 'each',
+    image: 'https://images.unsplash.com/photo-1523049673857-eb18f1d7b578?auto=format&fit=crop&q=80&w=400',
+    description: 'Creamy Hass avocados, ready to eat.'
+  },
+  {
+    id: '7',
+    name: 'Atlantic Salmon',
+    price: 12.99,
+    category: 'meat',
+    unit: 'lb',
+    image: 'https://images.unsplash.com/photo-1467003909585-2f8a72700288?auto=format&fit=crop&q=80&w=400',
+    description: 'Fresh wild-caught Atlantic salmon fillet.'
+  },
+  {
+    id: '8',
+    name: 'Greek Yogurt',
+    price: 1.25,
+    category: 'dairy',
+    unit: 'cup',
+    image: 'https://images.unsplash.com/photo-1488477181946-6428a0291777?auto=format&fit=crop&q=80&w=400',
+    description: 'High-protein plain Greek yogurt.'
+  },
+  {
+    id: '9',
+    name: 'Bell Peppers',
+    price: 3.99,
+    category: 'vegetables',
+    unit: '3-pack',
+    image: 'https://images.unsplash.com/photo-1566244015250-300589167011?auto=format&fit=crop&q=80&w=400',
+    description: 'Assorted red, yellow, and orange bell peppers.'
+  },
+  {
+    id: '10',
+    name: 'Organic Eggs',
+    price: 6.49,
+    category: 'dairy',
+    unit: 'dozen',
+    image: 'https://images.unsplash.com/photo-1506976785307-8732e854ad03?auto=format&fit=crop&q=80&w=400',
+    description: 'Large brown organic pasture-raised eggs.'
+  },
+  {
+    id: '11',
+    name: 'Cold Brew Coffee',
+    price: 4.99,
+    category: 'beverages',
+    unit: 'bottle',
+    image: 'https://images.unsplash.com/photo-1517701604599-bb29b565090c?auto=format&fit=crop&q=80&w=400',
+    description: 'Smooth and bold cold brew coffee concentrate.'
+  },
+  {
+    id: '12',
+    name: 'Quinoa',
+    price: 7.99,
+    category: 'pantry',
+    unit: '2lb',
+    image: 'https://images.unsplash.com/photo-1586201375761-83865001e31c?auto=format&fit=crop&q=80&w=400',
+    description: 'Organic white quinoa, a complete protein.'
+  }
+];

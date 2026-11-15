@@ -1,0 +1,5 @@
+{
+  "name": "FreshCart Grocery",
+  "description": "A modern, fast, and intuitive grocery shopping experience with real-time cart management and category-based browsing.",
+  "requestFramePermissions": ["geolocation"]
+}
