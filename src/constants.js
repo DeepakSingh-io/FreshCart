@@ -1,6 +1,4 @@
-import { Product, Category } from './types';
-
-export const CATEGORIES: Category[] = [
+export const CATEGORIES = [
   { id: 'all', name: 'All', icon: 'LayoutGrid' },
   { id: 'fruits', name: 'Fruits', icon: 'Apple' },
   { id: 'vegetables', name: 'Vegetables', icon: 'Leaf' },
@@ -11,7 +9,7 @@ export const CATEGORIES: Category[] = [
   { id: 'beverages', name: 'Beverages', icon: 'Coffee' },
 ];
 
-export const PRODUCTS: Product[] = [
+export const PRODUCTS = [
   {
     id: '1',
     name: 'Organic Bananas',
@@ -19,7 +17,7 @@ export const PRODUCTS: Product[] = [
     category: 'fruits',
     unit: 'lb',
     image: 'https://images.unsplash.com/photo-1603833665858-e81b1c7e4460?auto=format&fit=crop&q=80&w=400',
-    description: 'Fresh organic bananas, perfectly ripened.'
+    description: 'Fresh organic bananas, perfectly ripened.',
   },
   {
     id: '2',
@@ -28,7 +26,7 @@ export const PRODUCTS: Product[] = [
     category: 'fruits',
     unit: 'pack',
     image: 'https://images.unsplash.com/photo-1464965911861-746a04b4bca6?auto=format&fit=crop&q=80&w=400',
-    description: 'Sweet and juicy strawberries from local farms.'
+    description: 'Sweet and juicy strawberries from local farms.',
   },
   {
     id: '3',
@@ -37,7 +35,7 @@ export const PRODUCTS: Product[] = [
     category: 'vegetables',
     unit: 'bag',
     image: 'https://images.unsplash.com/photo-1576045057995-568f588f82fb?auto=format&fit=crop&q=80&w=400',
-    description: 'Crispy baby spinach leaves, pre-washed.'
+    description: 'Crispy baby spinach leaves, pre-washed.',
   },
   {
     id: '4',
@@ -46,25 +44,25 @@ export const PRODUCTS: Product[] = [
     category: 'dairy',
     unit: 'gal',
     image: 'https://images.unsplash.com/photo-1563636619-e910f01859ec?auto=format&fit=crop&q=80&w=400',
-    description: 'Vitamin D fortified whole milk.'
+    description: 'Vitamin D fortified whole milk.',
   },
   {
     id: '5',
     name: 'Sourdough Bread',
-    price: 5.50,
+    price: 5.5,
     category: 'bakery',
     unit: 'loaf',
     image: 'https://images.unsplash.com/photo-1585478259715-876acc5be8eb?auto=format&fit=crop&q=80&w=400',
-    description: 'Artisan sourdough bread baked fresh daily.'
+    description: 'Artisan sourdough bread baked fresh daily.',
   },
   {
     id: '6',
     name: 'Avocados',
-    price: 1.50,
+    price: 1.5,
     category: 'fruits',
     unit: 'each',
     image: 'https://images.unsplash.com/photo-1523049673857-eb18f1d7b578?auto=format&fit=crop&q=80&w=400',
-    description: 'Creamy Hass avocados, ready to eat.'
+    description: 'Creamy Hass avocados, ready to eat.',
   },
   {
     id: '7',
@@ -73,7 +71,7 @@ export const PRODUCTS: Product[] = [
     category: 'meat',
     unit: 'lb',
     image: 'https://images.unsplash.com/photo-1467003909585-2f8a72700288?auto=format&fit=crop&q=80&w=400',
-    description: 'Fresh wild-caught Atlantic salmon fillet.'
+    description: 'Fresh wild-caught Atlantic salmon fillet.',
   },
   {
     id: '8',
@@ -82,7 +80,7 @@ export const PRODUCTS: Product[] = [
     category: 'dairy',
     unit: 'cup',
     image: 'https://images.unsplash.com/photo-1488477181946-6428a0291777?auto=format&fit=crop&q=80&w=400',
-    description: 'High-protein plain Greek yogurt.'
+    description: 'High-protein plain Greek yogurt.',
   },
   {
     id: '9',
@@ -91,7 +89,7 @@ export const PRODUCTS: Product[] = [
     category: 'vegetables',
     unit: '3-pack',
     image: 'https://images.unsplash.com/photo-1566244015250-300589167011?auto=format&fit=crop&q=80&w=400',
-    description: 'Assorted red, yellow, and orange bell peppers.'
+    description: 'Assorted red, yellow, and orange bell peppers.',
   },
   {
     id: '10',
@@ -100,7 +98,7 @@ export const PRODUCTS: Product[] = [
     category: 'dairy',
     unit: 'dozen',
     image: 'https://images.unsplash.com/photo-1506976785307-8732e854ad03?auto=format&fit=crop&q=80&w=400',
-    description: 'Large brown organic pasture-raised eggs.'
+    description: 'Large brown organic pasture-raised eggs.',
   },
   {
     id: '11',
@@ -109,7 +107,7 @@ export const PRODUCTS: Product[] = [
     category: 'beverages',
     unit: 'bottle',
     image: 'https://images.unsplash.com/photo-1517701604599-bb29b565090c?auto=format&fit=crop&q=80&w=400',
-    description: 'Smooth and bold cold brew coffee concentrate.'
+    description: 'Smooth and bold cold brew coffee concentrate.',
   },
   {
     id: '12',
@@ -118,6 +116,6 @@ export const PRODUCTS: Product[] = [
     category: 'pantry',
     unit: '2lb',
     image: 'https://images.unsplash.com/photo-1586201375761-83865001e31c?auto=format&fit=crop&q=80&w=400',
-    description: 'Organic white quinoa, a complete protein.'
-  }
+    description: 'Organic white quinoa, a complete protein.',
+  },
 ];

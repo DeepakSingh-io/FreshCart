@@ -1,13 +1,6 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { X, MapPin, Navigation, Search, Loader2, AlertCircle, Check, ChevronRight } from 'lucide-react';
 import { motion, AnimatePresence } from 'motion/react';
-import { LocationData } from '../types';
-
-interface LocationPickerProps {
-  isOpen: boolean;
-  onClose: () => void;
-  onSelect: (location: LocationData) => void;
-}
 
 const MOCK_LOCATIONS = [
   { address: '123 Fifth Avenue, New York, NY 10003', lat: 40.7359, lng: -73.9911 },
@@ -15,14 +8,13 @@ const MOCK_LOCATIONS = [
   { address: '221B Baker Street, London NW1 6XE, UK', lat: 51.5237, lng: -0.1585 },
 ];
 
-export default function LocationPicker({ isOpen, onClose, onSelect }: LocationPickerProps) {
+export default function LocationPicker({ isOpen, onClose, onSelect }) {
   const [searchQuery, setSearchQuery] = useState('');
   const [isLoading, setIsLoading] = useState(false);
-  const [error, setError] = useState<string | null>(null);
+  const [error, setError] = useState(null);
   const [isDemoMode, setIsDemoMode] = useState(false);
-  const autocompleteRef = useRef<google.maps.places.Autocomplete | null>(null);
-  const inputRef = useRef<HTMLInputElement>(null);
-  const scriptLoadedRef = useRef(false);
+  const autocompleteRef = useRef(null);
+  const inputRef = useRef(null);
 
   useEffect(() => {
     if (!isOpen) {
@@ -31,7 +23,7 @@ export default function LocationPicker({ isOpen, onClose, onSelect }: LocationPi
     }
 
     const apiKey = import.meta.env.VITE_GOOGLE_MAPS_API_KEY;
-    
+
     if (!apiKey || apiKey === 'YOUR_GOOGLE_MAPS_API_KEY' || apiKey.includes('YOUR_API_KEY') || apiKey === 'MY_GOOGLE_MAPS_API_KEY') {
       console.warn('VITE_GOOGLE_MAPS_API_KEY is missing or invalid. Falling back to Demo Mode.');
       setIsDemoMode(true);
@@ -39,15 +31,14 @@ export default function LocationPicker({ isOpen, onClose, onSelect }: LocationPi
     }
 
     // Global handler for Google Maps authentication failures (like InvalidKeyMapError)
-    (window as any).gm_authFailure = () => {
+    window.gm_authFailure = () => {
       console.error('Google Maps authentication failed (InvalidKeyMapError).');
       setError('The Google Maps API key provided is invalid or has expired. Please verify your key in the Google Cloud Console.');
       setIsDemoMode(true);
-      
-      // Clean up the failed script to allow for potential retries if the user updates the key
+
       const script = document.getElementById('google-maps-script');
       if (script) script.remove();
-      if ((window as any).google) delete (window as any).google;
+      if (window.google) delete window.google;
     };
 
     const loadGoogleMaps = () => {
@@ -58,7 +49,6 @@ export default function LocationPicker({ isOpen, onClose, onSelect }: LocationPi
 
       const scriptId = 'google-maps-script';
       if (document.getElementById(scriptId)) {
-        // Script is already loading or loaded but maybe not initialized
         const checkInterval = setInterval(() => {
           if (window.google?.maps?.places) {
             clearInterval(checkInterval);
@@ -83,22 +73,20 @@ export default function LocationPicker({ isOpen, onClose, onSelect }: LocationPi
       document.head.appendChild(script);
     };
 
-    // Small delay to ensure input ref is available after modal animation starts
     const timer = setTimeout(loadGoogleMaps, 100);
     return () => clearTimeout(timer);
   }, [isOpen]);
 
   const initAutocomplete = () => {
-    // Retry a few times if inputRef is not yet available (common with animations)
     let retries = 0;
     const tryInit = () => {
       if (inputRef.current && window.google?.maps?.places) {
         try {
           if (autocompleteRef.current) {
-            google.maps.event.clearInstanceListeners(autocompleteRef.current);
+            window.google.maps.event.clearInstanceListeners(autocompleteRef.current);
           }
 
-          autocompleteRef.current = new google.maps.places.Autocomplete(inputRef.current, {
+          autocompleteRef.current = new window.google.maps.places.Autocomplete(inputRef.current, {
             types: ['address'],
             fields: ['formatted_address', 'geometry', 'name'],
           });
@@ -169,7 +157,7 @@ export default function LocationPicker({ isOpen, onClose, onSelect }: LocationPi
             setIsLoading(false);
           }
         },
-        (err) => {
+        () => {
           setError('Permission denied or location unavailable. Using demo location.');
           setTimeout(() => {
             onSelect(MOCK_LOCATIONS[0]);
@@ -185,14 +173,14 @@ export default function LocationPicker({ isOpen, onClose, onSelect }: LocationPi
     }
   };
 
-  const handleMockSelect = (loc: typeof MOCK_LOCATIONS[0]) => {
+  const handleMockSelect = (loc) => {
     onSelect(loc);
     onClose();
   };
 
   useEffect(() => {
     if (!isOpen) return;
-    const handleKeyDown = (e: KeyboardEvent) => {
+    const handleKeyDown = (e) => {
       if (e.key === 'Escape') onClose();
     };
     window.addEventListener('keydown', handleKeyDown);
@@ -250,7 +238,7 @@ export default function LocationPicker({ isOpen, onClose, onSelect }: LocationPi
                     <div className="space-y-1 min-w-0">
                       <p className="text-xs font-bold text-amber-900">Demo Mode Active</p>
                       <p className="text-xs text-amber-800 leading-relaxed">
-                        Google Maps API key is missing or invalid. You can still test using the suggestions below or the "Use Current Location" button.
+                        Google Maps API key is missing or invalid. You can still test using the suggestions below or the &quot;Use Current Location&quot; button.
                       </p>
                     </div>
                   </div>
@@ -263,7 +251,7 @@ export default function LocationPicker({ isOpen, onClose, onSelect }: LocationPi
                     <input
                       ref={inputRef}
                       type="text"
-                      placeholder={isDemoMode ? "Search disabled in demo mode" : "Enter your delivery address"}
+                      placeholder={isDemoMode ? 'Search disabled in demo mode' : 'Enter your delivery address'}
                       disabled={isDemoMode}
                       className={`w-full bg-slate-100 border border-transparent rounded-xl py-3 pl-10 pr-10 text-base sm:text-sm outline-none transition-all ${isDemoMode ? 'opacity-60 cursor-not-allowed' : 'focus:bg-white focus:border-brand-500 focus:ring-2 focus:ring-brand-500/20'}`}
                       value={searchQuery}
@@ -352,7 +340,7 @@ export default function LocationPicker({ isOpen, onClose, onSelect }: LocationPi
               <div className="px-5 py-4 bg-slate-50 border-t border-slate-100 text-center pb-safe shrink-0">
                 <div className="flex items-center justify-center gap-1.5 text-brand-700 mb-0.5">
                   <Check className="w-4 h-4" />
-                  <span className="text-xs font-bold uppercase tracking-wider">Safe & Secure</span>
+                  <span className="text-xs font-bold uppercase tracking-wider">Safe &amp; Secure</span>
                 </div>
                 <p className="text-xs text-slate-500">
                   Used only to show available products and delivery times in your area.
@@ -365,4 +353,3 @@ export default function LocationPicker({ isOpen, onClose, onSelect }: LocationPi
     </AnimatePresence>
   );
 }
-

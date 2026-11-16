@@ -27,12 +27,11 @@ import {
   CheckCircle2,
 } from 'lucide-react';
 import { motion, AnimatePresence } from 'motion/react';
-import { Product, CartItem, UserProfile, LocationData } from './types';
-import { CATEGORIES, PRODUCTS } from './constants';
-import AuthModal from './components/AuthModal';
-import LocationPicker from './components/LocationPicker';
+import { CATEGORIES, PRODUCTS } from './constants.js';
+import AuthModal from './components/AuthModal.jsx';
+import LocationPicker from './components/LocationPicker.jsx';
 
-const IconMap: Record<string, React.ReactNode> = {
+const IconMap = {
   Apple: <Apple className="w-5 h-5" />,
   Leaf: <Leaf className="w-5 h-5" />,
   Milk: <Milk className="w-5 h-5" />,
@@ -47,9 +46,9 @@ export default function App() {
   const [selectedCategory, setSelectedCategory] = useState('all');
   const [searchQuery, setSearchQuery] = useState('');
   const [isSearchFocused, setIsSearchFocused] = useState(false);
-  const [cart, setCart] = useState<CartItem[]>([]);
-  const [wishlist, setWishlist] = useState<string[]>([]);
-  const [failedImages, setFailedImages] = useState<Record<string, boolean>>({});
+  const [cart, setCart] = useState([]);
+  const [wishlist, setWishlist] = useState([]);
+  const [failedImages, setFailedImages] = useState({});
   const [isCartOpen, setIsCartOpen] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [orderPlaced, setOrderPlaced] = useState(false);
@@ -57,15 +56,15 @@ export default function App() {
   const [newsletterEmail, setNewsletterEmail] = useState('');
   const [newsletterJoined, setNewsletterJoined] = useState(false);
 
-  const [user, setUser] = useState<UserProfile | null>(null);
-  const [location, setLocation] = useState<LocationData | null>(null);
+  const [user, setUser] = useState(null);
+  const [location, setLocation] = useState(null);
   const [isAuthModalOpen, setIsAuthModalOpen] = useState(false);
   const [isLocationPickerOpen, setIsLocationPickerOpen] = useState(false);
 
-  const catalogRef = useRef<HTMLElement>(null);
+  const catalogRef = useRef(null);
 
   useEffect(() => {
-    const handleKeyDown = (e: KeyboardEvent) => {
+    const handleKeyDown = (e) => {
       if (e.key === 'Escape') {
         setIsCartOpen(false);
         setIsMobileMenuOpen(false);
@@ -77,7 +76,7 @@ export default function App() {
   }, []);
 
   const filteredProducts = useMemo(() => {
-    return PRODUCTS.filter(product => {
+    return PRODUCTS.filter((product) => {
       const matchesCategory = selectedCategory === 'all' || product.category === selectedCategory;
       const searchLower = searchQuery.toLowerCase();
       const matchesSearch =
@@ -92,19 +91,20 @@ export default function App() {
     if (!searchQuery || searchQuery.trim().length < 1) return [];
     const searchLower = searchQuery.trim().toLowerCase();
     return PRODUCTS
-      .filter(p =>
-        p.name.toLowerCase().includes(searchLower) ||
-        p.category.toLowerCase().includes(searchLower)
+      .filter(
+        (p) =>
+          p.name.toLowerCase().includes(searchLower) ||
+          p.category.toLowerCase().includes(searchLower)
       )
       .slice(0, 6);
   }, [searchQuery]);
 
-  const addToCart = (product: Product) => {
+  const addToCart = (product) => {
     setOrderPlaced(false);
-    setCart(prev => {
-      const existing = prev.find(item => item.id === product.id);
+    setCart((prev) => {
+      const existing = prev.find((item) => item.id === product.id);
       if (existing) {
-        return prev.map(item =>
+        return prev.map((item) =>
           item.id === product.id ? { ...item, quantity: item.quantity + 1 } : item
         );
       }
@@ -112,13 +112,13 @@ export default function App() {
     });
   };
 
-  const removeFromCart = (productId: string) => {
-    setCart(prev => prev.filter(item => item.id !== productId));
+  const removeFromCart = (productId) => {
+    setCart((prev) => prev.filter((item) => item.id !== productId));
   };
 
-  const updateQuantity = (productId: string, delta: number) => {
-    setCart(prev =>
-      prev.flatMap(item => {
+  const updateQuantity = (productId, delta) => {
+    setCart((prev) =>
+      prev.flatMap((item) => {
         if (item.id === productId) {
           const newQty = item.quantity + delta;
           if (newQty <= 0) return [];
@@ -129,9 +129,9 @@ export default function App() {
     );
   };
 
-  const toggleWishlist = (productId: string) => {
-    setWishlist(prev =>
-      prev.includes(productId) ? prev.filter(id => id !== productId) : [...prev, productId]
+  const toggleWishlist = (productId) => {
+    setWishlist((prev) =>
+      prev.includes(productId) ? prev.filter((id) => id !== productId) : [...prev, productId]
     );
   };
 
@@ -139,7 +139,7 @@ export default function App() {
     catalogRef.current?.scrollIntoView({ behavior: 'smooth', block: 'start' });
   };
 
-  const handleSelectSuggestion = (name: string) => {
+  const handleSelectSuggestion = (name) => {
     setSearchQuery(name);
     setIsSearchFocused(false);
     scrollToCatalog();
@@ -150,7 +150,7 @@ export default function App() {
     setCart([]);
   };
 
-  const handleNewsletterSubmit = (e: React.FormEvent) => {
+  const handleNewsletterSubmit = (e) => {
     e.preventDefault();
     if (!newsletterEmail.trim()) return;
     setNewsletterJoined(true);
@@ -317,7 +317,7 @@ export default function App() {
         </div>
       </nav>
 
-      {/* Mobile Search Strip (non-sticky so fixed/sticky chrome stays compact) */}
+      {/* Mobile Search Strip */}
       <div className="md:hidden px-4 py-2.5 bg-white border-b border-slate-100 relative z-30">
         <div className="relative">
           <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-5 h-5 text-slate-400 pointer-events-none" />
@@ -477,7 +477,7 @@ export default function App() {
             <h2 className="text-xl sm:text-2xl font-bold text-slate-900">
               {selectedCategory === 'all'
                 ? 'Popular Products'
-                : CATEGORIES.find(c => c.id === selectedCategory)?.name}
+                : CATEGORIES.find((c) => c.id === selectedCategory)?.name}
             </h2>
             <p className="text-slate-500 text-xs sm:text-sm font-medium tabular-nums">
               {filteredProducts.length} {filteredProducts.length === 1 ? 'item' : 'items'} found
@@ -488,7 +488,7 @@ export default function App() {
             <AnimatePresence mode="popLayout">
               {filteredProducts.map((product) => {
                 const isWishlisted = wishlist.includes(product.id);
-                const inCartItem = cart.find(item => item.id === product.id);
+                const inCartItem = cart.find((item) => item.id === product.id);
                 const isImgBroken = failedImages[product.id];
 
                 return (
@@ -506,7 +506,7 @@ export default function App() {
                         <img
                           src={product.image}
                           alt={product.name}
-                          onError={() => setFailedImages(prev => ({ ...prev, [product.id]: true }))}
+                          onError={() => setFailedImages((prev) => ({ ...prev, [product.id]: true }))}
                           className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
                           referrerPolicy="no-referrer"
                         />
@@ -604,7 +604,7 @@ export default function App() {
         </section>
       </main>
 
-      {/* Footer (with bottom clearance for mobile bottom nav bar) */}
+      {/* Footer */}
       <footer className="bg-white border-t border-slate-200 pt-10 sm:pt-12 pb-24 md:pb-8">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
           <div className="space-y-3 sm:space-y-4">
@@ -1042,4 +1042,3 @@ export default function App() {
     </div>
   );
 }
-

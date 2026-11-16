@@ -2,13 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { X, Mail, Lock, User, ArrowRight, Loader2, Github, Chrome, Eye, EyeOff, Phone, CheckCircle2 } from 'lucide-react';
 import { motion, AnimatePresence } from 'motion/react';
 
-interface AuthModalProps {
-  isOpen: boolean;
-  onClose: () => void;
-  onSuccess: (user: { name: string; email: string }) => void;
-}
-
-export default function AuthModal({ isOpen, onClose, onSuccess }: AuthModalProps) {
+export default function AuthModal({ isOpen, onClose, onSuccess }) {
   const [isLogin, setIsLogin] = useState(true);
   const [isLoading, setIsLoading] = useState(false);
   const [showPassword, setShowPassword] = useState(false);
@@ -19,11 +13,11 @@ export default function AuthModal({ isOpen, onClose, onSuccess }: AuthModalProps
     password: '',
     agreeTerms: false,
   });
-  const [errors, setErrors] = useState<Record<string, string>>({});
+  const [errors, setErrors] = useState({});
 
   useEffect(() => {
     if (!isOpen) return;
-    const handleKeyDown = (e: KeyboardEvent) => {
+    const handleKeyDown = (e) => {
       if (e.key === 'Escape') onClose();
     };
     window.addEventListener('keydown', handleKeyDown);
@@ -31,7 +25,7 @@ export default function AuthModal({ isOpen, onClose, onSuccess }: AuthModalProps
   }, [isOpen, onClose]);
 
   const validate = () => {
-    const newErrors: Record<string, string> = {};
+    const newErrors = {};
     if (!isLogin && !formData.name) newErrors.name = 'Name is required';
     if (!formData.email) {
       newErrors.email = 'Email is required';
@@ -53,12 +47,12 @@ export default function AuthModal({ isOpen, onClose, onSuccess }: AuthModalProps
     return Object.keys(newErrors).length === 0;
   };
 
-  const handleSubmit = async (e: React.FormEvent) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
     if (!validate()) return;
 
     setIsLoading(true);
-    await new Promise(resolve => setTimeout(resolve, 900));
+    await new Promise((resolve) => setTimeout(resolve, 900));
     setIsLoading(false);
     onSuccess({
       name: formData.name || formData.email.split('@')[0],
@@ -67,9 +61,9 @@ export default function AuthModal({ isOpen, onClose, onSuccess }: AuthModalProps
     onClose();
   };
 
-  const handleSocialLogin = async (provider: string) => {
+  const handleSocialLogin = async (provider) => {
     setIsLoading(true);
-    await new Promise(resolve => setTimeout(resolve, 600));
+    await new Promise((resolve) => setTimeout(resolve, 600));
     setIsLoading(false);
     onSuccess({
       name: `${provider} Shopper`,
@@ -139,7 +133,7 @@ export default function AuthModal({ isOpen, onClose, onSuccess }: AuthModalProps
                             placeholder="John Doe"
                             className={`w-full bg-slate-50 border rounded-xl py-2.5 pl-10 pr-4 text-base sm:text-sm outline-none transition-all ${errors.name ? 'border-red-500 ring-2 ring-red-500/10' : 'border-slate-200 focus:ring-2 focus:ring-brand-500/20 focus:border-brand-500'}`}
                             value={formData.name}
-                            onChange={e => setFormData({ ...formData, name: e.target.value })}
+                            onChange={(e) => setFormData({ ...formData, name: e.target.value })}
                           />
                         </div>
                         {errors.name && <p className="text-xs text-red-500 font-medium">{errors.name}</p>}
@@ -154,7 +148,7 @@ export default function AuthModal({ isOpen, onClose, onSuccess }: AuthModalProps
                             placeholder="+1 (555) 000-0000"
                             className={`w-full bg-slate-50 border rounded-xl py-2.5 pl-10 pr-4 text-base sm:text-sm outline-none transition-all ${errors.phone ? 'border-red-500 ring-2 ring-red-500/10' : 'border-slate-200 focus:ring-2 focus:ring-brand-500/20 focus:border-brand-500'}`}
                             value={formData.phone}
-                            onChange={e => setFormData({ ...formData, phone: e.target.value })}
+                            onChange={(e) => setFormData({ ...formData, phone: e.target.value })}
                           />
                         </div>
                         {errors.phone && <p className="text-xs text-red-500 font-medium">{errors.phone}</p>}
@@ -171,7 +165,7 @@ export default function AuthModal({ isOpen, onClose, onSuccess }: AuthModalProps
                         placeholder="name@example.com"
                         className={`w-full bg-slate-50 border rounded-xl py-2.5 pl-10 pr-4 text-base sm:text-sm outline-none transition-all ${errors.email ? 'border-red-500 ring-2 ring-red-500/10' : 'border-slate-200 focus:ring-2 focus:ring-brand-500/20 focus:border-brand-500'}`}
                         value={formData.email}
-                        onChange={e => setFormData({ ...formData, email: e.target.value })}
+                        onChange={(e) => setFormData({ ...formData, email: e.target.value })}
                       />
                     </div>
                     {errors.email && <p className="text-xs text-red-500 font-medium">{errors.email}</p>}
@@ -197,7 +191,7 @@ export default function AuthModal({ isOpen, onClose, onSuccess }: AuthModalProps
                         placeholder="••••••••"
                         className={`w-full bg-slate-50 border rounded-xl py-2.5 pl-10 pr-12 text-base sm:text-sm outline-none transition-all ${errors.password ? 'border-red-500 ring-2 ring-red-500/10' : 'border-slate-200 focus:ring-2 focus:ring-brand-500/20 focus:border-brand-500'}`}
                         value={formData.password}
-                        onChange={e => setFormData({ ...formData, password: e.target.value })}
+                        onChange={(e) => setFormData({ ...formData, password: e.target.value })}
                       />
                       <button
                         type="button"
@@ -219,7 +213,7 @@ export default function AuthModal({ isOpen, onClose, onSuccess }: AuthModalProps
                             type="checkbox"
                             className="peer sr-only"
                             checked={formData.agreeTerms}
-                            onChange={e => setFormData({ ...formData, agreeTerms: e.target.checked })}
+                            onChange={(e) => setFormData({ ...formData, agreeTerms: e.target.checked })}
                           />
                           <div className={`w-5 h-5 border-2 rounded-md transition-all ${formData.agreeTerms ? 'bg-brand-500 border-brand-500' : 'border-slate-300 group-hover:border-brand-500'}`} />
                           <CheckCircle2 className={`absolute inset-0 w-5 h-5 text-white scale-0 transition-transform ${formData.agreeTerms ? 'scale-100' : ''}`} />
@@ -279,7 +273,7 @@ export default function AuthModal({ isOpen, onClose, onSuccess }: AuthModalProps
                 </div>
 
                 <p className="text-center text-sm text-slate-500">
-                  {isLogin ? "Don't have an account?" : "Already have an account?"}{' '}
+                  {isLogin ? "Don't have an account?" : 'Already have an account?'}{' '}
                   <button
                     type="button"
                     onClick={() => {
@@ -299,4 +293,3 @@ export default function AuthModal({ isOpen, onClose, onSuccess }: AuthModalProps
     </AnimatePresence>
   );
 }
-
