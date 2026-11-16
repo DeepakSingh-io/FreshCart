@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import { X, MapPin, Navigation, Search, Loader2, AlertCircle, Check, ChevronRight } from 'lucide-react';
 import { motion, AnimatePresence } from 'motion/react';
 
@@ -151,7 +151,7 @@ export default function LocationPicker({ isOpen, onClose, onSelect }) {
             } else {
               setError('Could not find address for your location.');
             }
-          } catch (err) {
+          } catch {
             setError('Failed to fetch address.');
           } finally {
             setIsLoading(false);
